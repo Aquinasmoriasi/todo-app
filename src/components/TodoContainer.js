@@ -1,4 +1,5 @@
 import React from 'react';
+import TodoList from './TodoList';
 
 export default class TodoContainer extends React.PureComponent {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class TodoContainer extends React.PureComponent {
         {
           id: 1,
           title: 'Setup development environment',
-          completed: true,
+          completed: false,
         },
         {
           id: 2,
@@ -24,12 +25,24 @@ export default class TodoContainer extends React.PureComponent {
     };
   }
 
+  handleChange = (id) => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      }),
+    }));
+  };
+
   render() {
     const { todos } = this.state;
     return (
-      <ul>
-        {todos.map((todo) => (<li key={todo.id}>{todo.title}</li>))}
-      </ul>
+      <TodoList todos={todos} handleChangeProps={this.handleChange} />
     );
   }
 }
