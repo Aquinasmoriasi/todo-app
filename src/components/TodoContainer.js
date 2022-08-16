@@ -1,5 +1,8 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import TodoList from './TodoList';
+import Header from './Header';
+import Input from './Input';
 
 export default class TodoContainer extends React.PureComponent {
   constructor(props) {
@@ -25,7 +28,20 @@ export default class TodoContainer extends React.PureComponent {
     };
   }
 
-  handleChange = (id) => {
+  handleInputChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      title: e.target.value,
+    });
+  };
+
+  addTodoItem = (title) => {
+    const { todos } = this.state;
+    const newTodo = { id: uuidv4(), title, completed: false };
+    this.setState({ todos: [newTodo, ...todos] });
+  }
+
+  handleChecked = (id) => {
     this.setState((prevState) => ({
       todos: prevState.todos.map((todo) => {
         if (todo.id === id) {
@@ -39,10 +55,26 @@ export default class TodoContainer extends React.PureComponent {
     }));
   };
 
-  render() {
+  handleDeleteTodo = (id) => {
     const { todos } = this.state;
+    this.setState({
+      todos: [...todos.filter((todo) => todo.id !== id)],
+    });
+  };
+
+  render() {
+    const { todos, title } = this.state;
     return (
-      <TodoList todos={todos} handleChangeProps={this.handleChange} />
+      <div className="container">
+        <Header />
+        <Input inputChangeProps={this.handleInputChange} addItem={this.addTodoItem} />
+        <TodoList
+          todos={todos}
+          title={title}
+          handleChangeProps={this.handleChecked}
+          deleteTodoProps={this.handleDeleteTodo}
+        />
+      </div>
     );
   }
 }
