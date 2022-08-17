@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TodoList from './TodoList';
 import Header from './Header';
@@ -6,6 +6,11 @@ import Input from './Input';
 
 const TodoContainer = () => {
   const [state, changeState] = useState({ todos: [] });
+  const { todos } = state;
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   // const componentDidMount = () => {
   //   const temp = localStorage.getItem('todos');
@@ -59,7 +64,7 @@ const TodoContainer = () => {
     });
   };
 
-  const { todos, title } = state;
+  const { title } = todos;
   return (
     <div className="container">
       <Header />
