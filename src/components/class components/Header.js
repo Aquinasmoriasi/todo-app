@@ -1,9 +1,5 @@
-import { PureComponent } from 'react';
+const Header = () => (
+  <h1>Todos</h1>
+);
 
-export default class Header extends PureComponent {
-  render() {
-    return (
-      <h1>Todos</h1>
-    );
-  }
-}
+export default Header;

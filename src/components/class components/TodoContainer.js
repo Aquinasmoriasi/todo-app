@@ -17,26 +17,6 @@ const TodoContainer = () => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  // useEffect(() => {
-  //   console.log('test run');
-
-  //   // getting stored items
-  //   const temp = localStorage.getItem('todos');
-  //   const loadedTodos = JSON.parse(temp);
-
-  //   if (loadedTodos) {
-  //     changeState(loadedTodos);
-  //   }
-  // }, []);
-
-  // const componentDidUpdate = (prevProps, prevState) => {
-  //   const { todos } = state;
-  //   if (prevState.todos !== todos) {
-  //     const temp = JSON.stringify(todos);
-  //     localStorage.setItem('todos', temp);
-  //   }
-  // };
-
   const handleInputChange = (e) => {
     e.preventDefault();
     changeState({
