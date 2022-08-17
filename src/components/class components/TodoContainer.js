@@ -5,22 +5,29 @@ import Header from './Header';
 import Input from './Input';
 
 const TodoContainer = () => {
-  const [state, changeState] = useState({ todos: [] });
-  const { todos } = state;
+  function getInitialTodos() {
+    // getting stored items
+    const temp = localStorage.getItem('todos');
+    const savedTodos = JSON.parse(temp);
+    return savedTodos || [];
+  }
+  const [todos, changeState] = useState(getInitialTodos());
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  // const componentDidMount = () => {
+  // useEffect(() => {
+  //   console.log('test run');
+
+  //   // getting stored items
   //   const temp = localStorage.getItem('todos');
   //   const loadedTodos = JSON.parse(temp);
+
   //   if (loadedTodos) {
-  //     changeState({
-  //       todos: loadedTodos,
-  //     });
+  //     changeState(loadedTodos);
   //   }
-  // };
+  // }, []);
 
   // const componentDidUpdate = (prevProps, prevState) => {
   //   const { todos } = state;
@@ -38,40 +45,34 @@ const TodoContainer = () => {
   };
 
   const addTodoItem = (title) => {
-    const { todos } = state;
     const newTodo = { id: uuidv4(), title, completed: false };
-    changeState({ todos: [newTodo, ...todos] });
+    changeState([newTodo, ...todos]);
   };
 
   const handleChecked = (id) => {
-    changeState((prevState) => ({
-      todos: prevState.todos.map((todo) => {
+    changeState(
+      todos.map((todo) => {
         if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
+          // eslint-disable-next-line no-param-reassign
+          todo.completed = !todo.completed;
         }
         return todo;
       }),
-    }));
+    );
   };
 
   const handleDeleteTodo = (id) => {
-    const { todos } = state;
-    changeState({
-      todos: [...todos.filter((todo) => todo.id !== id)],
-    });
+    changeState(
+      todos.filter((todo) => todo.id !== id),
+    );
   };
-
-  const { title } = todos;
   return (
     <div className="container">
       <Header />
       <Input inputChangeProps={handleInputChange} addItem={addTodoItem} />
       <TodoList
         todos={todos}
-        title={title}
+        title={todos.title}
         handleChangeProps={handleChecked}
         deleteTodoProps={handleDeleteTodo}
       />
