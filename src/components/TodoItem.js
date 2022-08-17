@@ -6,12 +6,38 @@ import { BsTrashFill } from 'react-icons/bs';
 class TodoItem extends React.PureComponent {
   render() {
     const { todo, handleChangesEvent, deleteItem } = this.props;
+    const trashIconBtn = {
+      backgroundColor: 'rgba(153, 153, 153, 0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '7px 7px',
+      border: 'none',
+      alignSelf: 'flex-end',
+      borderRadius: '50%',
+    };
+
+    const gray = {
+      color: 'gray',
+    };
+
+    const red = {
+      color: 'red',
+    };
+
+    const line = {
+      textDecoration: 'line-through',
+    };
+
     return (
       <li>
-        <input type="checkbox" checked={todo.completed} onChange={() => handleChangesEvent(todo.id)} />
-        {todo.title}
-        <button type="button" onClick={() => deleteItem(todo.id)}>
-          <BsTrashFill />
+        <div className="addedItems">
+          <input type="checkbox" checked={todo.completed} onChange={() => handleChangesEvent(todo.id)} />
+          <span style={todo.completed ? line : null}>
+            {todo.title}
+          </span>
+        </div>
+        <button type="button" style={trashIconBtn} onClick={() => deleteItem(todo.id)}>
+          <BsTrashFill style={todo.completed ? red : gray} />
         </button>
       </li>
     );

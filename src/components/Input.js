@@ -18,7 +18,9 @@ export default class Input extends React.PureComponent {
     e.preventDefault();
     const { title } = this.state;
     const { addItem } = this.props;
-    addItem(title);
+    if (title.trim()) {
+      addItem(title);
+    }
     this.setState({ title: '' });
   };
 
