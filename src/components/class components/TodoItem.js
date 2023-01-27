@@ -31,7 +31,7 @@ const TodoItem = (props) => {
     <li>
       <div className="addedItems">
         <input type="checkbox" checked={todo.completed} onChange={() => handleChangesEvent(todo.id)} />
-        <span style={todo.completed ? line : null}>
+        <span style={todo.completed ? line : null} contentEditable>
           {todo.title}
         </span>
       </div>

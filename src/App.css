@@ -63,9 +63,9 @@ ul {
 }
 
 ul li {
-  padding: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 2px solid rgb(241, 238, 238);
 }
 
@@ -73,4 +73,17 @@ ul li div {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.addedItems {
+  width: 100%;
+}
+
+.addedItems span {
+  padding: 12px;
+  width: 100%;
+}
+
+.addedItems span:focus {
+  outline: none;
 }
